@@ -45,7 +45,7 @@ yt-dlp -x \
 ffmpeg -i audio.flac -f segment -segment_time 60 -c copy ./audios/chunk%03d.flac
 
 for chunk in ./audios/chunk*.flac; do
-    make whsiper ./audios/$chunk >> "$output"
+    make whisper ./audios/$chunk >> "$output"
 done
 
 # TODO: Pipe the transcription to ollama and summarize the results using the Modelfile.

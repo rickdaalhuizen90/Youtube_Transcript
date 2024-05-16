@@ -48,6 +48,11 @@ Example:
 - Transcriptions may have limitations or inaccuracies depending on audio quality and language.
 - Transcription may take some time, depending on the length of the video and the available system resources.
 
+## Todo
+
+- [ ] Implement an option to retrieve transcriptions directly from YouTube using their API, as an alternative to running the Whisper speech recognition model.
+- [ ] Implement a web interface to enable users to access this application directly through a web browser.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
