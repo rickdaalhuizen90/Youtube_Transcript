@@ -1,0 +1,43 @@
+# Understanding Allocation and Deallocation: A Comparison Between Government Budgeting and Computer Memory Management
+
+- **Definition of Allocate**
+    - To split up and distribute parts of a limited resource
+
+- **Government Budget Allocation Example**
+    - Governments have a tax budget that they allocate to different sectors like healthcare, education, etc.
+    - The top level (e.g., treasurer) decides the broad division of the budget. For example:
+        - 10% to defense
+        - 30% to healthcare
+        - 20% to education
+
+- **Computer Memory Allocation**
+    - Computers have a limited amount of memory that can be allocated to different programs or applications.
+    - The operating system (OS) acts like the treasurer, allocating memory in bulk for programs to use.
+    - Inside programs, there are often several layers of allocators choosing how to further divide the memory.
+
+- **Budget Allocators and Memory Allocators**
+    - In both cases, allocators take a resource that's been given to them, split it up, and allocate it further.
+
+- **Deallocation**
+    - Deallocation refers to taking resources back again.
+        - In budgetary terms, deallocating funds means you have more money to spend elsewhere.
+        - In memory allocation, deallocating memory has more complexity due to the need to consider addresses (positions).
+            - Memory can be allocated in different places, which affects deallocation.
+
+- **Linear Allocator Example**
+    - The simplest possible allocator: Linear Allocator
+    - It only requires a single number variable for the next address in memory.
+        - When a program requests memory, it's allocated at the current address, and the next address moves up by the size of the allocation.
+    - Fragmentation occurs when any program exits other than the most recently started one, leaving holes in memory that can't be used.
+
+- **Modern OS Memory Allocation**
+    - Modern Operating Systems divide memory into lots of small blocks and hand over smaller blocks when a large amount of memory is requested.
+    - When a process exits and the memory is deallocated, the OS marks all the blocks owned by that process as free.
+    - Reusing memory helps prevent fragmentation and exhaustion.
+
+- **Linear Allocators in Programming**
+    - Linear allocators are useful for certain situations where data structures or algorithms only add or remove things from the end of memory (e.g., stack data 
+structures).
+
+- **Complexity and Performance Trade-offs**
+    - Non-contiguous memory can lead to complexity and performance trade-offs, but they're considered worthwhile to prevent fragmentation and memory exhaustion.

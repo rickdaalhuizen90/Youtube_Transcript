@@ -39,7 +39,7 @@ make build
 Example:
 
 ```bash
-./transcribe.sh -u https://www.youtube.com/watch?v=ke6AVZvDVPg -o transcript.txt
+./transcribe.sh -u "https://www.youtube.com/watch?v=GZ6PuLikw84" -o allocators-explained.txt
 ```
 
 ## Notes

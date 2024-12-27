@@ -39,13 +39,27 @@ yt-dlp -x \
     --no-update \
     --ffmpeg-location $(which ffmpeg) \
     --output "./audios/audio.%(ext)s" -k \
-    --audio-format flac "$url"
+    --audio-format wav "$url"
 
-# Split the audio into 60-second chunks
-ffmpeg -i audio.flac -f segment -segment_time 60 -c copy ./audios/chunk%03d.flac
+# Ensure the input file exists
+input_file="./audios/audio.wav"
+if [ ! -f "$input_file" ]; then
+    echo "Error: Input file $input_file not found."
+    exit 1
+fi
 
-for chunk in ./audios/chunk*.flac; do
-    make whisper ./audios/$chunk >> "$output"
+# Split the audio into 60-second chunks with 16 kHz sample rate
+ffmpeg -i "$input_file" -f segment -segment_time 60 -ar 16000 -ac 1 ./audios/chunk%03d.wav
+
+for chunk in ./audios/chunk*.wav; do
+    echo "Transcribing chunk $chunk..."
+    docker run -it --rm \
+        -v ./models:/app/models \
+        -v ./audios:/app/audios \
+        whisper.cpp:main "./build/bin/whisper-cli -m ./models/ggml-base.en.bin -f $chunk -otxt"
 done
 
-# TODO: Pipe the transcription to ollama and summarize the results using the Modelfile.
+cat $(ls ./audios/chunk*.txt | sort -V)  > "$output"
+echo "Transcription saved to $output"
+
+ollama run yt-transcript-model "$(cat $output)"
